@@ -1,8 +1,12 @@
  package com.esragg.landmarkbook;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +20,8 @@ import java.util.stream.Collectors;
 
  public class MainActivity extends AppCompatActivity {
 
-     private ActivityMainBinding binding;
     ArrayList<Landmark> landmarkArrayList;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,16 @@ import java.util.stream.Collectors;
         landmarkArrayList.add(colosseum);
         landmarkArrayList.add(londonBridge);
 
+        //Not Efficient
+        //Bitmap
+        Bitmap pisaBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.pisa);
+        //Bitmap'i alip intent ile gonderemiyoruz ama Singleton ile yollayabiliyoruz.
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LandmarkAdapter landmarkAdapter = new LandmarkAdapter(landmarkArrayList);
+        binding.recyclerView.setAdapter(landmarkAdapter);
+
+        /*
         //Adapter
         //ListView
 
@@ -57,5 +71,7 @@ import java.util.stream.Collectors;
                 startActivity(intent);
             }
         });
+
+         */
     }
 }
